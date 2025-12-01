@@ -8,6 +8,7 @@
 #include "clarabel/kktsystem/kkt.hpp"
 #include "clarabel/presolver/presolver.hpp"
 #include "clarabel/residuals/residuals.hpp"
+#include "clarabel/solver/solver.hpp"
 
 using clarabel::cones::NonnegativeCone;
 using clarabel::cones::PSDCone;
@@ -67,6 +68,16 @@ int main() {
     auto res = clarabel::residuals::compute(data, vars);
     assert(res.primal < 1e-8);
     assert(res.dual < 1e-4);
+
+    // End-to-end primal-dual iteration mirrors Julia loop
+    NonnegativeCone cone(data.q.size());
+    settings.max_iter = 50;
+    auto summary = clarabel::solver::solve(data, cone, settings);
+    assert(summary.converged);
+    assert(summary.vars.x.size() == 2);
+    assert(approx_equal(summary.vars.x[0], 0.5, 1e-2));
+    assert(approx_equal(summary.vars.x[1], 0.5, 1e-2));
+    assert(!summary.stats.primal_residuals.empty());
 
     std::cout << "All clarabel_cpp tests passed" << std::endl;
     return 0;

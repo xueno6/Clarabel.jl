@@ -15,6 +15,7 @@ add_library(clarabel_cpp
     src/kktsystem/kkt.cpp
     src/kktsolvers/solver.cpp
     src/presolver/presolver.cpp
+    src/solver/solver.cpp
 )
 
 target_include_directories(clarabel_cpp PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
