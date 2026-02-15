@@ -101,7 +101,7 @@ struct DeviceVector {
 };
 
 ValidationReport validate_problem_data(const ProblemData& data);
-ValidationReport validate_variables(const ProblemData& data, const Variables& vars);
+ValidationReport validate_variables(const ProblemData& data, const Variables& vars, std::size_t expected_s_dim = 0);
 
 } // namespace core
 } // namespace clarabel

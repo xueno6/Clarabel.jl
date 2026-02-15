@@ -9,7 +9,7 @@ namespace residuals {
 Residuals compute(const clarabel::core::ProblemData& data, const clarabel::core::Variables& vars) {
     Residuals res;
 
-    if (vars.x.size() != data.q.size() || vars.y.size() != data.b.size() || vars.s.size() != data.q.size()) {
+    if (vars.x.size() != data.q.size() || vars.y.size() != data.b.size() || vars.s.size() < data.q.size()) {
         const double inf = std::numeric_limits<double>::infinity();
         res.primal = inf;
         res.dual = inf;

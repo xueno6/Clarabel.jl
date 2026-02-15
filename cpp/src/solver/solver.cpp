@@ -63,7 +63,7 @@ SolveSummary solve(const clarabel::core::ProblemData& data, const clarabel::cone
     summary.vars.s.assign(cone.dimension(), 0.0);
     summary.vars.y.assign(m, 0.0);
 
-    const auto var_validation = clarabel::core::validate_variables(data, summary.vars);
+    const auto var_validation = clarabel::core::validate_variables(data, summary.vars, cone.dimension());
     if (!var_validation.ok()) {
         summary.status = clarabel::core::SolveStatus::InvalidProblemData;
         summary.status_detail = "Initial variables failed validation.";

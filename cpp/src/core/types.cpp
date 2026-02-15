@@ -50,7 +50,7 @@ ValidationReport validate_problem_data(const ProblemData& data) {
     return report;
 }
 
-ValidationReport validate_variables(const ProblemData& data, const Variables& vars) {
+ValidationReport validate_variables(const ProblemData& data, const Variables& vars, std::size_t expected_s_dim) {
     ValidationReport report;
 
     if (vars.x.size() != data.q.size()) {
@@ -59,8 +59,9 @@ ValidationReport validate_variables(const ProblemData& data, const Variables& va
     if (vars.y.size() != data.b.size()) {
         report.issues.push_back({"y", "y length must match b length."});
     }
-    if (vars.s.size() != data.q.size()) {
-        report.issues.push_back({"s", "s length must match q length (NN cone placeholder)."});
+    const std::size_t s_dim = expected_s_dim == 0 ? data.q.size() : expected_s_dim;
+    if (vars.s.size() != s_dim) {
+        report.issues.push_back({"s", "s length must match expected cone/slack dimension."});
     }
 
     return report;

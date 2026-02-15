@@ -46,6 +46,10 @@ int main() {
     auto validation = clarabel::core::validate_problem_data(data);
     assert(validation.ok());
 
+    auto var_validation_default = clarabel::core::validate_variables(data, {std::vector<double>{0.0, 0.0}, std::vector<double>{0.0}, std::vector<double>{0.0, 0.0}});
+    assert(var_validation_default.ok());
+    auto var_validation_custom = clarabel::core::validate_variables(data, {std::vector<double>{0.0, 0.0}, std::vector<double>{0.0}, std::vector<double>{0.0, 0.0, 0.0}}, 3);
+    assert(var_validation_custom.ok());
     auto scaled = clarabel::presolver::equilibrate(data);
     (void)scaled;
 
